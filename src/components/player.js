@@ -4,7 +4,7 @@ function createPlayer(name) {
   const deck = createDeck();
   const HAND_SIZE = 5;
   let hand = [];
-  let wonCardCount = 0;
+  let wonCards = [];
   // Initialize player's hand
   drawCards();
 
@@ -30,24 +30,36 @@ function createPlayer(name) {
   }
 
   function playCard(index) {
-    if (hand.length === 0) throw "hand is empty";
+    if (hand.length === 0) return "Empty";
     // Validate index
     if (index >= hand.length || index < 0) throw "index is out of bound";
     const playedCard = hand.splice(index, 1);
-    return playedCard;
+    return playedCard[0];
   }
 
-  const addWonCardCount = (addValue) => (wonCardCount += addValue);
-  const getWonCardCount = () => wonCardCount;
+  const createNewDeck = () => {
+    deck.createNewDeck(wonCards);
+    wonCards.length = 0;
+  };
+
+  const addWonCards = (addCards) => {
+    wonCards = [...wonCards, ...addCards];
+  };
+  const getWonCards = () => wonCards;
+  const getWonCardCount = () => wonCards.length;
   const getHand = () => hand;
+  const getDeck = () => deck.getDeck();
 
   return {
     name,
+    getDeck,
     playCard,
     drawCards,
     getHand,
-    addWonCardCount,
+    addWonCards,
+    getWonCards,
     getWonCardCount,
+    createNewDeck,
   };
 }
 

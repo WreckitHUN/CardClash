@@ -1,5 +1,5 @@
 function createDeck() {
-  const DECK_SIZE = 30;
+  const DECK_SIZE = 3;
   let suits = ["rock", "paper", "scissors"];
   const deck = [];
 
@@ -8,11 +8,11 @@ function createDeck() {
     return;
   }
 
-  const numberOfType = DECK_SIZE / 3;
+  const numberOfSuit = DECK_SIZE / 3;
 
-  // Create a deck containing numberOfType Rocks, Papers, Scissors cards
-  [...Array(numberOfType)].forEach(() => {
-    suits.forEach((type) => deck.push(type));
+  // Create a deck containing numberOfSuit Rocks, Papers, Scissors cards
+  [...Array(numberOfSuit)].forEach(() => {
+    suits.forEach((suit) => deck.push(suit));
   });
 
   // Shuffle the deck
@@ -31,9 +31,18 @@ function createDeck() {
     return deck.splice(0, number);
   };
 
+  const createNewDeck = (wonCards) => {
+    if (deck.length !== 0) return;
+    wonCards.forEach((card) => deck.push(card.card));
+  };
+
+  const getDeck = () => deck;
+
   return {
     deck,
+    getDeck,
     drawCards,
+    createNewDeck,
   };
 }
 

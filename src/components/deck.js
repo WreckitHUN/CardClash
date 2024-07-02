@@ -1,5 +1,5 @@
 function createDeck() {
-  const DECK_SIZE = 3;
+  const DECK_SIZE = 6;
   let suits = ["rock", "paper", "scissors"];
   const deck = [];
 
@@ -33,7 +33,11 @@ function createDeck() {
 
   const createNewDeck = (wonCards) => {
     if (deck.length !== 0) return;
-    wonCards.forEach((card) => deck.push(card.card));
+    wonCards.forEach((card) => deck.push(card));
+  };
+
+  const clearDeck = () => {
+    deck.length = 0;
   };
 
   const getDeck = () => deck;
@@ -43,6 +47,7 @@ function createDeck() {
     getDeck,
     drawCards,
     createNewDeck,
+    clearDeck,
   };
 }
 

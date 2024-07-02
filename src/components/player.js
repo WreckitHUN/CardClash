@@ -49,10 +49,12 @@ function createPlayer(name) {
   const getWonCardCount = () => wonCards.length;
   const getHand = () => hand;
   const getDeck = () => deck.getDeck();
+  const clearDeck = () => deck.clearDeck();
 
   return {
     name,
     getDeck,
+    clearDeck,
     playCard,
     drawCards,
     getHand,

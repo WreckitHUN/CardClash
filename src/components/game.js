@@ -15,7 +15,10 @@ function gameController() {
   let playerCard = undefined;
   let computerCard = undefined;
 
+  // State variables
   let lastRound = false;
+  let gameOver = false;
+  let lasManStanding = false;
 
   let table = [];
   let currentPlayer = player1;
@@ -27,6 +30,7 @@ function gameController() {
   };
 
   function playCard(index) {
+    if (gameOver) return;
     const playedCard = currentPlayer.playCard(index);
     playerCard = playedCard;
     // Put the card on the table
@@ -35,6 +39,7 @@ function gameController() {
     togglePlayer();
     // Computer's turn
     computerCard = playComputer();
+
     // Check who won the round or tie
     const roundWinner = checkRound();
     // End the turn
@@ -63,33 +68,40 @@ function gameController() {
     // Compare the last 2 cards on the table and decide who won the round or tie
     if (rules[table[last].card].beats === table[beforeLast].card) {
       // Last card is the winning card so give the cards to the winner
-      table[last].player.addWonCards(table);
+      table[last].player.addWonCards(table.map((card) => card.card));
       // If it is the last round than give the remaining deck to the wonCards
       if (lastRound) {
+        console.log("Player2 won the last round");
         player1.addWonCards(player1.getDeck());
+        player1.addWonCards(player1.getHand());
+        player1.clearDeck();
         player2.addWonCards(player2.getDeck());
-        lastRound = false;
+        player2.addWonCards(player2.getHand());
+        player2.clearDeck();
+        gameOver = true;
       }
       // Return the winning card object
       return table[last];
     }
     if (rules[table[beforeLast].card].beats === table[last].card) {
       // BeforeLast card is the winning card so give the cards to the winner
-      table[beforeLast].player.addWonCards(table);
+      table[beforeLast].player.addWonCards(table.map((card) => card.card));
       // If it is the last round than give the remaining deck to the wonCards
       if (lastRound) {
+        console.log("Player1 won the last round");
         player1.addWonCards(player1.getDeck());
+        player1.addWonCards(player1.getHand());
+        player1.clearDeck();
         player2.addWonCards(player2.getDeck());
-        lastRound = false;
+        player2.addWonCards(player2.getHand());
+        player2.clearDeck();
+        gameOver = true;
       }
       // Return the winning card object
       return table[beforeLast];
     }
-    // If the function gets here than it is a tie
-    if (lastRound && areHandsEmpty()) {
-      // If it is the last round and the hands are empty then its a TIE GAME OVER
-      console.log("TIE");
-    }
+    // If it gets here the round is TIE
+
     return { card: "Tie", player: { name: "No winners" } };
   }
 
@@ -99,10 +111,27 @@ function gameController() {
     player2.drawCards();
     // Check if there are no more cards in the hands so game over
     if (areHandsEmpty()) {
+      // Check if there are no more cards neither in score card's pile
+      if (areWonCardsEmpty()) {
+        console.log("Last man standing");
+        // Initialize last man standing
+        lasManStanding = true;
+        gameOver = true;
+      }
       // If the last round is tie
       if (roundWinner.card === "Tie") {
+        console.log("last round");
+        // If someone doesn't have scoreCards than he loses the round
+        if (player1.getWonCards().length === 0) {
+          player2.addWonCards(table.map((card) => card.card));
+          gameOver = true;
+          return;
+        } else if (player2.getWonCards().length === 0) {
+          player1.addWonCards(table.map((card) => card.card));
+          gameOver = true;
+          return;
+        }
         lastRound = true;
-        console.log("TODO");
         // Players will continue to play with their scored cards
         // They will get their scored cards as their new deck
         player1.createNewDeck();
@@ -112,6 +141,9 @@ function gameController() {
         player2.drawCards();
         return;
       }
+      // If someone won the last round so its not a tie
+      console.log("Game over");
+      gameOver = true;
     }
 
     // If the round is tie than don't clear the table
@@ -121,10 +153,11 @@ function gameController() {
   }
 
   function areHandsEmpty() {
-    if (player1.getHand().length === 0 && player2.getHand().length === 0) {
-      return true;
-    }
-    return false;
+    return player1.getHand().length === 0 && player2.getHand().length === 0;
+  }
+
+  function areWonCardsEmpty() {
+    return player1.getWonCards().length === 0 && player2.getWonCards().length === 0;
   }
 
   function gameWinner() {

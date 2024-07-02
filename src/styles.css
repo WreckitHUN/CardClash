@@ -1,6 +1,30 @@
+*,
+*::after,
+*::before {
+  /* Keeping the width and height */
+  box-sizing: border-box;
+}
+
+/* Topography */
+html {
+  /* 62.5% of 16px is 10px */
+  font-size: 62.5%;
+}
+
 body {
   height: 100svh;
   position: relative;
+}
+
+/* Card */
+
+.card {
+  padding: 0;
+  border: none;
+  width: 16rem;
+  height: 22.4rem;
+
+  background: red;
 }
 
 .block {

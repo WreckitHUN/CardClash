@@ -50,11 +50,15 @@ function createPlayer(name) {
   const getHand = () => hand;
   const getDeck = () => deck.getDeck();
   const clearDeck = () => deck.clearDeck();
+  const clearHand = () => {
+    hand.length = 0;
+  };
 
   return {
     name,
     getDeck,
     clearDeck,
+    clearHand,
     playCard,
     drawCards,
     getHand,

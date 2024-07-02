@@ -1,5 +1,5 @@
 function createDeck() {
-  const DECK_SIZE = 6;
+  const DECK_SIZE = 3;
   let suits = ["rock", "paper", "scissors"];
   const deck = [];
 
@@ -17,6 +17,7 @@ function createDeck() {
 
   // Shuffle the deck
   shuffleDeck();
+
   function shuffleDeck() {
     for (let i = deck.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * deck.length);

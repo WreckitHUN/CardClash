@@ -1,5 +1,5 @@
 function createDeck() {
-  const DECK_SIZE = 3;
+  const DECK_SIZE = 6;
   let suits = ["rock", "paper", "scissors"];
   const deck = [];
 

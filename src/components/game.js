@@ -138,6 +138,9 @@ function gameController() {
         // Initialize last man standing
         lastManStanding = true;
         gameOver = true;
+        // Clear the table
+        table.length = 0;
+        return;
       }
       // If the last round is tie
       if (roundWinner.card === "Tie") {

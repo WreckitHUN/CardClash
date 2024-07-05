@@ -12,6 +12,9 @@ html {
 }
 
 body {
+  overflow: hidden;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
   height: 100svh;
 }
 
@@ -48,24 +51,45 @@ body {
 /* Card */
 
 .card {
+  cursor: pointer;
   padding: 0;
   border: none;
   width: 104px;
   height: 145px;
   border-radius: 10px;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
+}
+
+.absolute {
+  transition: all 1s;
+  position: absolute;
 }
 
 .rock {
   background: tomato;
 }
 
+.rock::after {
+  font-size: 3rem;
+  content: "Rock";
+}
+
 .paper {
   background-color: dodgerblue;
 }
 
+.paper::after {
+  font-size: 3rem;
+  content: "Paper";
+}
+
 .scissors {
   background: purple;
+}
+
+.scissors:after {
+  font-size: 2rem;
+  content: "Scissors";
 }
 
 .deck {

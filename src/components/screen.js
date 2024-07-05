@@ -13,17 +13,33 @@ function screenHandler() {
   // Add event listener to the hand1
   hand1.addEventListener("click", (e) => {
     card = e.target;
+    // If not clicked on a card return
     if (!card.dataset.index) return;
+    const cardClass = card.getAttribute("class");
+    const classesArray = cardClass.split(" ");
+    const suit = classesArray.find((item) => item !== "card");
     const index = card.dataset.index;
-    console.log(index);
     game.playCard(index);
+
     console.log(`Player1 chose: ${game.getPlayerCard()}`);
     console.log(`Player2 chose: ${game.getComputerCard()}`);
 
     console.log(`Player1 score: ${player1.getWonCards()}`);
     console.log(`Player2 score: ${player2.getWonCards()}`);
+    // Get the position of the clicked card
+    const cardX = card.getBoundingClientRect().x;
+    const cardY = card.getBoundingClientRect().y;
+    // Make card invisible
+    card.style.display = "none";
+    // Create a card on top of clicked card
+    const cardTemp = createCard(-1, suit, "absolute");
+    cardTemp.style.left = `${cardX}px`;
+    cardTemp.style.top = `${cardY}px`;
+    document.body.appendChild(cardTemp);
+    // Move the cardTemp to the table
+    setTimeout(() => (cardTemp.style.transform = "translate(0px, -200px)"), 0);
     // Draw the cards
-    drawCards(player1);
+    setTimeout(() => drawCards(player1), 500);
   });
 
   function drawCards(player) {
@@ -36,10 +52,10 @@ function screenHandler() {
     });
   }
 
-  function createCard(index, suit) {
+  function createCard(index, ...suit) {
     const card = document.createElement("button");
     card.dataset.index = index;
-    card.classList.add("card", suit);
+    card.classList.add("card", ...suit);
     return card;
   }
 

@@ -29,6 +29,12 @@ function screenHandler() {
     // Get the position of the clicked card
     const cardX = card.getBoundingClientRect().x;
     const cardY = card.getBoundingClientRect().y;
+    // Get the position of the center of the page
+    const centerX = document.body.getBoundingClientRect().width / 2;
+    const centerY = document.body.getBoundingClientRect().height / 2;
+    // Get the distance of the center and the clicked card
+    const dx = centerX - cardX;
+    const dy = centerY - cardY;
     // Make card invisible
     card.style.display = "none";
     // Create a card on top of clicked card
@@ -37,9 +43,9 @@ function screenHandler() {
     cardTemp.style.top = `${cardY}px`;
     document.body.appendChild(cardTemp);
     // Move the cardTemp to the table
-    setTimeout(() => (cardTemp.style.transform = "translate(0px, -200px)"), 0);
+    setTimeout(() => (cardTemp.style.transform = `translate(${dx}px, ${dy}px)`), 0);
     // Draw the cards
-    setTimeout(() => drawCards(player1), 500);
+    setTimeout(() => drawCards(player1), 1000);
   });
 
   function drawCards(player) {

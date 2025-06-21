@@ -12,14 +12,17 @@ function createDeck() {
       [deck[i], deck[j]] = [deck[j], deck[i]];
     }
   };
+  shuffle();
 
   const drawCard = () => {
     const drawnCard = deck.length ? deck.pop() : "No card left";
     return drawnCard;
   };
 
-  shuffle();
+  const getDeck = () => deck;
+
   return {
+    getDeck,
     shuffle,
     drawCard,
   };

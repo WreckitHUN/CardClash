@@ -4,6 +4,8 @@ function createPlayer(name, deck) {
   const scorePile = [];
 
   const getName = () => _name;
+  const getHand = () => hand;
+  const isHandEmpty = () => !hand.length;
 
   const drawCard = () => {
     const drawnCard = deck.drawCard();
@@ -11,12 +13,11 @@ function createPlayer(name, deck) {
     if (drawnCard === "No card left" || hand.length >= 5) return;
     // Put card in hand
     hand.push(drawnCard);
-    console.log(hand);
   };
 
   const playCard = (index) => {
     if (index < 0 || index >= hand.length) return;
-
+    // Returns the chosen card from hand and shifts hand array
     return hand.splice(index, 1)[0];
   };
 
@@ -26,6 +27,8 @@ function createPlayer(name, deck) {
 
   return {
     getName,
+    getHand,
+    isHandEmpty,
     drawCard,
     playCard,
     updateScorePile,

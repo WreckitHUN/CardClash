@@ -31,8 +31,12 @@ function createGame() {
     const selectedCard2 = randomSelectCard(player2);
 
     let outcome = playRound(player1, selectedCard1, player2, selectedCard2);
-    console.log(`${player1.getName()} played ${outcome.cards[0]}`);
-    console.log(`${player2.getName()} played ${outcome.cards[1]}`);
+    console.log(
+      `${player1.getName()} played ${outcome.cards[0]}, ${selectedCard1}`,
+    );
+    console.log(
+      `${player2.getName()} played ${outcome.cards[1]}, ${selectedCard2}`,
+    );
 
     // See the outcome
     //Either someone Wins or it is a Tie
@@ -48,6 +52,8 @@ function createGame() {
       console.log(`${outcome.winner.getName()} wins the round`);
       //Put cards in the winner's score pile
       outcome.winner.updateScorePile(withheldPile);
+      // Empty the witheldPile
+      withheldPile = [];
       outcome.winner.updateScorePile(outcome.cards);
 
       console.log(`Player1's Score is: ${player1.getScore()}`);
@@ -62,6 +68,30 @@ function createGame() {
     console.log(player1.getName(), player1.getHand());
     console.log(player2.getName(), player2.getHand());
     console.log(deck.getDeck());
+
+    // Check hands
+    // No Cards left
+    if (player1.isHandEmpty() && player2.isHandEmpty()) {
+      // If the previous round was TIE -> SUDDEN DEATH
+      if (outcome.isTie) {
+        console.log("SUDDEN DEATH to settle the round");
+      }
+
+      // Get the scores
+      let score1 = player1.getScore();
+      let score2 = player2.getScore();
+      if (score1 > score2) {
+        // Player1 WON
+        console.log(`${player1.getName()} Won the game`);
+        console.log(`${score1}:${score2}`);
+      } else if (score2 > score1) {
+        // Player2 WON
+        console.log(`${player2.getName()} Won the game`);
+      } else {
+        // TIE
+        console.log("SUDDEN DEATH to settle the game");
+      }
+    }
   });
 }
 

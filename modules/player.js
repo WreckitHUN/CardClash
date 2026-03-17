@@ -6,6 +6,7 @@ function createPlayer(name, deck) {
   const getName = () => _name;
   const getHand = () => hand;
   const isHandEmpty = () => !hand.length;
+  const getScore = () => scorePile.length;
 
   const drawCard = () => {
     const drawnCard = deck.drawCard();
@@ -24,8 +25,6 @@ function createPlayer(name, deck) {
   const updateScorePile = (cards) => {
     scorePile.push(...cards);
   };
-
-  const getScore = () => scorePile.length;
 
   return {
     getName,

@@ -16,6 +16,11 @@ function createPlayer(name, deck) {
     hand.push(drawnCard);
   };
 
+  const suddenDeathHand = () => {
+    if (hand.length) return;
+    hand = ["Rock", "Paper", "Scissors"];
+  };
+
   const playCard = (index) => {
     if (index < 0 || index >= hand.length) return;
     // Returns the chosen card from hand and shifts hand array
@@ -34,6 +39,7 @@ function createPlayer(name, deck) {
     drawCard,
     playCard,
     updateScorePile,
+    suddenDeathHand,
   };
 }
 

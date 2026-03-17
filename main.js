@@ -110,24 +110,9 @@ function checkHands() {
   return "continue";
 }
 
-function suddenDeath(player1, player2) {
+function suddenDeath(p1, p2) {
   console.log("Sudden Death begins...");
-
-  while (true) {
-    const p1Choice = Math.floor(Math.random() * 3); // 0–2
-    const p2Choice = Math.floor(Math.random() * 3);
-
-    // Create fake hands for sudden death? No — use classic RPS:
-    const cardMap = ["Rock", "Paper", "Scissors"];
-
-    const card1 = cardMap[p1Choice];
-    const card2 = cardMap[p2Choice];
-
-    const result = determineWinner(card1, card2);
-
-    if (result === "player1") return player1;
-    if (result === "player2") return player2;
-
-    console.log("Sudden death tie — retry");
-  }
+  // Create fake hands for sudden death?
+  p1.suddenDeathHand();
+  p2.suddenDeathHand();
 }

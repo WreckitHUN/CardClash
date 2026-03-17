@@ -25,9 +25,12 @@ function createPlayer(name, deck) {
     scorePile.push(...cards);
   };
 
+  const getScore = () => scorePile.length;
+
   return {
     getName,
     getHand,
+    getScore,
     isHandEmpty,
     drawCard,
     playCard,
